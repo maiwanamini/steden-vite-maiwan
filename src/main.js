@@ -30,9 +30,16 @@ const weatherIcons = {
 };
 
 async function fetchWeather(city) {
+  if (!API_KEY) {
+    console.error('API key is missing!');
+    return '⚠️ API key ontbreekt';
+  }
+
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}&units=metric`;
   try {
     const response = await fetch(url);
+    if (!response.ok) throw new Error('Weerdata ophalen mislukt');
+
     const data = await response.json();
     const weatherCondition = data.weather[0].main;
     const emoji = weatherIcons[weatherCondition] || '❓';
@@ -53,31 +60,29 @@ document.addEventListener('DOMContentLoaded', async () => {
       caption.textContent = `${city.name}, ${weatherInfo}`;
     }
   });
-});
 
-const swiper = new Swiper('.swiper', {
-  modules: [Navigation, Pagination, EffectFade, Autoplay],
-  loop: true,
-  slidesPerView: 1,
-  effect: 'fade',
-  fadeEffect: { crossFade: true },
-  autoplay: {
-    delay: 4000,
-    disableOnInteraction: false,
-  },
-  speed: 1000,
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-  allowTouchMove: true,
-});
+  const swiper = new Swiper('.swiper', {
+    modules: [Navigation, Pagination, EffectFade, Autoplay],
+    loop: true,
+    slidesPerView: 1,
+    effect: 'fade',
+    fadeEffect: { crossFade: true },
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+    },
+    speed: 1000,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    allowTouchMove: true,
+  });
 
-document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('.swiper-button-next, .swiper-button-prev');
   buttons.forEach(button => {
     button.addEventListener('click', () => {
