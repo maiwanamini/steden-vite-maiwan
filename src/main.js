@@ -6,7 +6,9 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
-const API_KEY = '2f63c69349e7fc2d40d4114d3120017c';
+// Haal de API-key op uit het .env bestand
+const API_KEY = import.meta.env.VITE_API_KEY;
+
 const cities = [
   { name: 'New York', lat: 40.7128, lon: -74.0060 },
   { name: 'Tokyo', lat: 35.6895, lon: 139.6917 },
@@ -60,10 +62,10 @@ const swiper = new Swiper('.swiper', {
   effect: 'fade',
   fadeEffect: { crossFade: true },
   autoplay: {
-    delay: 4000, 
-    disableOnInteraction: false, 
+    delay: 4000,
+    disableOnInteraction: false,
   },
-  speed: 1000, 
+  speed: 1000,
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
