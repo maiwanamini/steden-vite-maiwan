@@ -6,6 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 
+// Haal de API-key op uit het .env bestand
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 const cities = [
@@ -28,22 +29,21 @@ const weatherIcons = {
   'Haze': '🌫️'
 };
 
-const weatherCache = new Map();
+const weatherCache = {};
 
 async function fetchWeather(city) {
   if (!API_KEY) {
-    console.error('API key ontbreekt!');
+    console.error('API key is missing!');
     return '⚠️ API key ontbreekt';
   }
 
-  if (weatherCache.has(city.name)) {
-    return weatherCache.get(city.name);
+  if (weatherCache[city.name]) {
+    return weatherCache[city.name];
   }
 
+  const url = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}&units=metric`;
   try {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}&units=metric`;
     const response = await fetch(url);
-
     if (!response.ok) throw new Error('Weerdata ophalen mislukt');
 
     const data = await response.json();
@@ -51,10 +51,10 @@ async function fetchWeather(city) {
     const emoji = weatherIcons[weatherCondition] || '❓';
     const weatherInfo = `${emoji} ${data.main.temp.toFixed(1)}°C`;
 
-    weatherCache.set(city.name, weatherInfo);
+    weatherCache[city.name] = weatherInfo; // Cache het resultaat
     return weatherInfo;
   } catch (error) {
-    console.error(`Fout bij ophalen van weer voor ${city.name}:`, error);
+    console.error(`Error fetching weather for ${city.name}:`, error);
     return '⚠️ Weer niet beschikbaar';
   }
 }
@@ -62,19 +62,16 @@ async function fetchWeather(city) {
 document.addEventListener('DOMContentLoaded', async () => {
   const slides = document.querySelectorAll('.swiper-slide');
 
-  try {
-    const weatherPromises = cities.map(fetchWeather);
-    const weatherResults = await Promise.all(weatherPromises);
-
-    slides.forEach((slide, index) => {
-      const weatherDiv = slide.querySelector('.weather-info');
-      if (weatherDiv) {
-        weatherDiv.textContent = weatherResults[index];
+  await Promise.all(
+    Array.from(slides).map(async (slide, index) => {
+      const city = cities[index];
+      if (city) {
+        const caption = slide.querySelector('.slide-caption');
+        const weatherInfo = await fetchWeather(city);
+        caption.textContent = `${city.name}, ${weatherInfo}`;
       }
-    });
-  } catch (error) {
-    console.error('Fout bij het verwerken van de weerdata:', error);
-  }
+    })
+  );
 
   const swiper = new Swiper('.swiper', {
     modules: [Navigation, Pagination, EffectFade, Autoplay],
@@ -102,7 +99,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   buttons.forEach(button => {
     button.addEventListener('click', () => {
       button.classList.add('clicked');
-      setTimeout(() => button.classList.remove('clicked'), 300);
+      setTimeout(() => {
+        button.classList.remove('clicked');
+      }, 300);
     });
   });
 });
