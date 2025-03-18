@@ -22,10 +22,13 @@
     "prettier": "^3.5.3",
     "vite": "^6.1.0"
   },
-  "dependencies": {
-    "swiper": "^11.2.4"
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
     "**/*.{js,css,md}": "prettier --write"
-  }
+
+  } 
 }
