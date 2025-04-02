@@ -1,46 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!doctype html>
+<html lang="nl">
+  <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Opdracht 1</title>
-    <link rel="stylesheet" href="/src/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- Swiper-slideshow (slider element) -->
     <div class="swiper">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide" data-lat="40.7128" data-lon="-74.0060">
-                <img src="/newyork.jpeg" alt="New York">
-                <div class="slide-caption">New York, Verenigde Staten</div>
-                <div class="weather-info">🌡️ Laden...</div>
-            </div>
-            <div class="swiper-slide" data-lat="35.6895" data-lon="139.6917">
-                <img src="/tokyo.jpeg" alt="Tokyo">
-                <div class="slide-caption">Tokyo, Japan</div>
-                <div class="weather-info">🌡️ Laden...</div>
-            </div>
-            <div class="swiper-slide" data-lat="-33.9249" data-lon="18.4241">
-                <img src="/kaapstad.jpeg" alt="Kaapstad">
-                <div class="slide-caption">Kaapstad, Zuid-Afrika</div>
-                <div class="weather-info">🌡️ Laden...</div>
-            </div>
-            <div class="swiper-slide" data-lat="-33.8688" data-lon="151.2093">
-                <img src="/sydney.jpeg" alt="Sydney">
-                <div class="slide-caption">Sydney, Australië</div>
-                <div class="weather-info">🌡️ Laden...</div>
-            </div>
-            <div class="swiper-slide" data-lat="-22.9068" data-lon="-43.1729">
-                <img src="/rio.jpeg" alt="Rio de Janeiro">
-                <div class="slide-caption">Rio de Janeiro, Brazilië</div>
-                <div class="weather-info">🌡️ Laden...</div>
-            </div>
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" data-lat="40.7128" data-lon="-74.0060">
+          <img src="/newyork.jpeg" alt="New York" />
+          <div class="slide-caption">New York, Verenigde Staten</div>
+          <div class="weather-info">🌡️ Laden...</div>
         </div>
-        <div class="swiper-pagination"></div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+        <div class="swiper-slide" data-lat="35.6895" data-lon="139.6917">
+          <img src="/tokyo.jpeg" alt="Tokyo" />
+          <div class="slide-caption">Tokyo, Japan</div>
+          <div class="weather-info">🌡️ Laden...</div>
+        </div>
+        <div class="swiper-slide" data-lat="-33.9249" data-lon="18.4241">
+          <img src="/kaapstad.jpeg" alt="Kaapstad" />
+          <div class="slide-caption">Kaapstad, Zuid-Afrika</div>
+          <div class="weather-info">🌡️ Laden...</div>
+        </div>
+        <div class="swiper-slide" data-lat="-33.8688" data-lon="151.2093">
+          <img src="/sydney.jpeg" alt="Sydney" />
+          <div class="slide-caption">Sydney, Australië</div>
+          <div class="weather-info">🌡️ Laden...</div>
+        </div>
+        <div class="swiper-slide" data-lat="-22.9068" data-lon="-43.1729">
+          <img src="/rio.jpeg" alt="Rio de Janeiro" />
+          <div class="slide-caption">Rio de Janeiro, Brazilië</div>
+          <div class="weather-info">🌡️ Laden...</div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
     </div>
 
+    <!-- Container voor de 3D-aardbol (volledig scherm) -->
+    <div id="earth-container"></div>
+
+    <!-- Script voor Swiper, weer en Three.js -->
     <script type="module" src="/src/main.js"></script>
-</body>
+  </body>
 </html>
